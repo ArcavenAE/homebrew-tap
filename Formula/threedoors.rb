@@ -1,17 +1,17 @@
 class Threedoors < Formula
   desc "Three Doors - radical task management showing only 3 tasks at a time"
   homepage "https://github.com/arcaven/ThreeDoors"
-  version "0.1.0-alpha.20260307.0b5591d"
+  version "0.1.0-alpha.20260307.f6fca60"
   license "MIT"
 
   on_arm do
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260307-0b5591d/threedoors-darwin-arm64"
-    sha256 "5eb5395b32e8fe1e132645ba9a30ffdde61257caf64f5b4a6b89ff14998533d4"
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260307-f6fca60/threedoors-darwin-arm64"
+    sha256 "8b7084ba1b9d937b7e20ea6d73cf5290af881bc0d15c19f2a285b5fa701e6ded"
   end
 
   on_intel do
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260307-0b5591d/threedoors-darwin-amd64"
-    sha256 "24f7180d5745b87880702c960afaf4d1992bf760013311dce9cc1907a59ea729"
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260307-f6fca60/threedoors-darwin-amd64"
+    sha256 "99cd5b7653f51167e1615d02451a7427c404704f0fb85c9b4ea695ee7f2680b1"
   end
 
   def install
