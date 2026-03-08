@@ -1,15 +1,17 @@
 class Threedoors < Formula
-  desc "Radical task management showing only 3 tasks at a time"
+  desc "Three Doors - radical task management showing only 3 tasks at a time"
   homepage "https://github.com/arcaven/ThreeDoors"
-  version "0.1.0-alpha.20260308.13c3b73"
+  version "0.1.0-alpha.20260308.cb7e633"
   license "MIT"
 
-  if Hardware::CPU.arm?
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260308-13c3b73/threedoors-darwin-arm64"
-    sha256 "4649a09380f958029bee590f2eb76b4f51fad75bb31c55ed08de6fa7fe3a35b2"
-  else
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260308-13c3b73/threedoors-darwin-amd64"
-    sha256 "e89662f643ff50ed5b203eeb099a97c284e7fc7868da5647e4b1fa6aefa86b60"
+  on_arm do
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260308-cb7e633/threedoors-darwin-arm64"
+    sha256 "8442772cdbbec951a2a23adb8c446c2801f32e79a4ae75ca301a00f0a9a7484b"
+  end
+
+  on_intel do
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260308-cb7e633/threedoors-darwin-amd64"
+    sha256 "723dec79c8bd683d6da34dc5ff3f5c4e096d05c97b27328039d3698cbaf44b01"
   end
 
   def install
@@ -18,6 +20,6 @@ class Threedoors < Formula
   end
 
   test do
-    assert_match "ThreeDoors", shell_output("#{bin}/threedoors --version 2>&1")
+    assert_match "ThreeDoors", shell_output("#{bin}/threedoors --version 2>&1", 0)
   end
 end
