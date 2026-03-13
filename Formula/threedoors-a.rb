@@ -1,18 +1,18 @@
 class ThreedoorsA < Formula
   desc "TUI task manager — alpha channel (updated on every main push)"
   homepage "https://github.com/arcaven/ThreeDoors"
-  version "0.1.0-alpha.20260313.222517.2af7876"
+  version "0.1.0-alpha.20260313.222726.e7d76a6"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222517-2af7876/threedoors-a-darwin-arm64"
-    sha256 "92dac7db3ac294933f9ba4be5df3d024abe311ba766457abbdad6e80b322aeb5"
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222726-e7d76a6/threedoors-a-darwin-arm64"
+    sha256 "d5721bcf9b1e09d057c40d424a4b17d43cce1e9e35d207abc584b3b7b54ef5eb"
   elsif OS.mac?
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222517-2af7876/threedoors-a-darwin-amd64"
-    sha256 "9e4f9827fef694b7b019d35fa15f94743fa354f57a4d94efd0d6f8c7f002757d"
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222726-e7d76a6/threedoors-a-darwin-amd64"
+    sha256 "0f848c62306e636960d4636efb505f281e2ac0f25e9c896203b1d6aef53efc9e"
   elsif OS.linux?
-    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222517-2af7876/threedoors-a-linux-amd64"
-    sha256 "67d8b8a669d49261a6dd5599031057e7a79f81f2dca9cc66e358c89ed4d3f18e"
+    url "https://github.com/arcaven/ThreeDoors/releases/download/alpha-20260313-222726-e7d76a6/threedoors-a-linux-amd64"
+    sha256 "9a07c159f3161ba92b35ab3d5a8a747ad2d46dde6c4391f472eea5cb52396a27"
   end
 
   def install
