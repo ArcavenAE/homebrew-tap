@@ -4,20 +4,20 @@
 class AclaudeA < Formula
   desc "Opinionated wrapper for Claude Code with persona theming (alpha channel)"
   homepage "https://github.com/arcaven/aclaude"
-  version "alpha-20260318-052655-c2394b4"
+  version "alpha-20260318-053502-eff1f6c"
   license "MIT"
 
   on_macos do
-    url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-052655-c2394b4/aclaude-a-darwin-arm64"
-    sha256 "8ca68a5f73bd450bf82b1eb7f3d98dea13f0acd883e02f856b818f485270d134"
+    url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-053502-eff1f6c/aclaude-a-darwin-arm64"
+    sha256 "d56ffee1db1ee258ed96c446d358ca861bc6d39d7d43c8945a21c433b1c6763a"
   end
 
   on_linux do
     if Hardware::CPU.arm?
-      url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-052655-c2394b4/aclaude-a-linux-arm64"
+      url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-053502-eff1f6c/aclaude-a-linux-arm64"
       sha256 "SHA256_LINUX_ARM64_PLACEHOLDER"
     else
-      url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-052655-c2394b4/aclaude-a-linux-amd64"
+      url "https://github.com/arcaven/aclaude/releases/download/alpha-20260318-053502-eff1f6c/aclaude-a-linux-amd64"
       sha256 "SHA256_LINUX_AMD64_PLACEHOLDER"
     end
   end
