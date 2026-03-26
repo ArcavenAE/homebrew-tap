@@ -15,19 +15,19 @@ jobs:
 
       - name: Tap local checkout
         run: |
-          mkdir -p "$(brew --repository)/Library/Taps/arcaven"
-          ln -sf "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/arcaven/homebrew-tap"
+          mkdir -p "$(brew --repository)/Library/Taps/arcavenae"
+          ln -sf "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/arcavenae/homebrew-tap"
 
       - name: Audit formulas
         run: |
           for f in Formula/*.rb; do
             name="$(basename "$f" .rb)"
-            brew audit --strict "arcaven/tap/$name"
+            brew audit --strict "arcavenae/tap/$name"
           done
 
       - name: Check style
         run: |
           for f in Formula/*.rb; do
             name="$(basename "$f" .rb)"
-            brew style "arcaven/tap/$name"
+            brew style "arcavenae/tap/$name"
           done
