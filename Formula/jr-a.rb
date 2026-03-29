@@ -1,5 +1,5 @@
 class JrA < Formula
-  desc "Fast, keyboard-driven Jira CLI with offline support and fuzzy search (alpha channel)"
+  desc "Fast, keyboard-driven Jira CLI with offline support and fuzzy search (alpha)"
   homepage "https://github.com/arcavenae/jira-cli"
   version "alpha-20260326.12"
   license "MIT"
