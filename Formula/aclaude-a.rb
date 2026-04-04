@@ -5,9 +5,9 @@
 class AclaudeA < Formula
   desc "Opinionated wrapper for Claude Code with persona theming (alpha channel)"
   homepage "https://github.com/arcavenae/aclaude"
-  url "https://github.com/arcavenae/aclaude/releases/download/alpha-20260404-165944-f00b2c0/aclaude-a-darwin-arm64"
-  version "alpha-20260404-165944-f00b2c0"
-  sha256 "2aa02ecbb739f68942b04cd0bd1c45610c1a1db28b626c5ca4f2a196650c59fc"
+  url "https://github.com/arcavenae/aclaude/releases/download/alpha-20260404-175950-4e32627/aclaude-a-darwin-arm64"
+  version "alpha-20260404-175950-4e32627"
+  sha256 "26092d6c42c5960c3866e9038b3924e170a9b0707d54af1554b66c445fba99fb"
   license "MIT"
 
   def install
