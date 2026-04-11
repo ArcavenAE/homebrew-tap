@@ -5,9 +5,9 @@
 class Kos < Formula
   desc "Knowledge Operating System — graph-based knowledge accumulation for designed systems"
   homepage "https://github.com/arcavenae/kos"
-  url "https://github.com/arcavenae/kos/releases/download/alpha-20260411-162802-3c901e1/kos-darwin-arm64"
-  version "alpha-20260411-162802-3c901e1"
-  sha256 "2b0dfb7cd0278bf7284056759d20835b311f02e81adc614322d54caaa4579e42"
+  url "https://github.com/arcavenae/kos/releases/download/alpha-20260411-164116-0b919fc/kos-darwin-arm64"
+  version "alpha-20260411-164116-0b919fc"
+  sha256 "3675ac633716de8c42b56299cdc23ad6cef2f309f975e3735c6527a6bf782698"
   license "Apache-2.0"
 
   def install
