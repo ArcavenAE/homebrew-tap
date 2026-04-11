@@ -3,12 +3,12 @@
 # macOS only (arm64). Linux users: download from GitHub releases.
 
 class Kos < Formula
-  desc "Knowledge Operating System — graph-based knowledge accumulation for designed systems"
+  desc "Graph-based knowledge accumulation for designed systems"
   homepage "https://github.com/arcavenae/kos"
-  url "https://github.com/arcavenae/kos/releases/download/alpha-20260411-165600-e930d18/kos-darwin-arm64"
-  version "alpha-20260411-165600-e930d18"
-  sha256 "1fce56e9ca52359c7c1afaa673d2a42ca488cb4a188c46e39883fcd312a36055"
-  license "Apache-2.0"
+  url "https://github.com/arcavenae/kos/releases/download/alpha-20260411-174558-36a73ce/kos-darwin-arm64"
+  version "alpha-20260411-174558-36a73ce"
+  sha256 "eed2c55acb45f39efec18a620b9399124a2f62bc98ae3bc0393ae377064bedac"
+  license "MIT"
 
   def install
     bin.install "kos-darwin-arm64" => "kos"
