@@ -1,18 +1,21 @@
 class Marvel < Formula
   desc "Agent orchestration control plane"
   homepage "https://github.com/ArcavenAE/marvel"
-  version "0.1.0-alpha.20260417.010848.70fbbba"
+  version "0.1.0-alpha.20260417.021249.718e8b6"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-010848-70fbbba/marvel-darwin-arm64"
-    sha256 "652b8263c455cd3129bcd19fda32a21c97e750694c8c536f7879bac0c83a1d72"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-021249-718e8b6/marvel-darwin-arm64"
+    sha256 "34cf54b15dd08d05533e0996575a17247828f328760f915fc7b4f10d580c152a"
   elsif OS.mac?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-010848-70fbbba/marvel-darwin-amd64"
-    sha256 "e37c621c846502d1f11413d774a901814dfa012e4631155621ade1e0b0e9e848"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-021249-718e8b6/marvel-darwin-amd64"
+    sha256 "5c440368ad9327aaf818de5b148e18fedef83e94dccbf9c3927c185b4c47a284"
+  elsif OS.linux? && Hardware::CPU.arm?
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-021249-718e8b6/marvel-linux-arm64"
+    sha256 "d4e6586ea77642a176d9788859485102341a3bb3599c251a89631543b407abc5"
   elsif OS.linux?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-010848-70fbbba/marvel-linux-amd64"
-    sha256 "c46b4094f683857e77f642c6b9540844e87e266862187a56087bdda7cc6c112f"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260417-021249-718e8b6/marvel-linux-amd64"
+    sha256 "4065ad53c9c40e844e3a01eff48665a339a3c7a8ad44c3545e35de0848f2bf29"
   end
 
   def install
@@ -20,6 +23,8 @@ class Marvel < Formula
       bin.install "marvel-darwin-arm64" => "marvel"
     elsif OS.mac?
       bin.install "marvel-darwin-amd64" => "marvel"
+    elsif OS.linux? && Hardware::CPU.arm?
+      bin.install "marvel-linux-arm64" => "marvel"
     elsif OS.linux?
       bin.install "marvel-linux-amd64" => "marvel"
     end
