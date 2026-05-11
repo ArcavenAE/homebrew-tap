@@ -5,18 +5,18 @@
 class ForestageA < Formula
   desc "Opinionated wrapper for Claude Code with persona theming (alpha channel)"
   homepage "https://github.com/arcavenae/forestage"
-  version "alpha-20260506-213538-e15e5ab"
+  version "alpha-20260511-165745-d393de5"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260506-213538-e15e5ab/forestage-a-darwin-arm64"
-    sha256 "20cb12a24c50f5aef57350ce5c2b2c32fb3f39df48815b37c1b9ad1dbf191b26"
+    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260511-165745-d393de5/forestage-a-darwin-arm64"
+    sha256 "7363d8e089751f36e62b30f028d7db944ac3b4693761815dbe0fb250dba02d33"
   elsif OS.linux? && Hardware::CPU.arm?
-    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260506-213538-e15e5ab/forestage-a-linux-arm64"
-    sha256 "ee5bd0234ca2289f052e6becaf745a8577459ba0e8ff43178b18230e3ad3e80f"
+    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260511-165745-d393de5/forestage-a-linux-arm64"
+    sha256 "07e04b391f3071841b63c6edd7c34645d634d8978b5aecf0f0f6f903ef85e710"
   elsif OS.linux?
-    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260506-213538-e15e5ab/forestage-a-linux-amd64"
-    sha256 "2dd5ec5ba884bab51fe5be1f95145351f2b559d8c1db84ce42b98e5678102791"
+    url "https://github.com/arcavenae/forestage/releases/download/alpha-20260511-165745-d393de5/forestage-a-linux-amd64"
+    sha256 "6c7441dd40c0034e318d4384c0d8fa68f3a8e3daf31a524b4c4bcbf8dc77a711"
   end
 
   def install
