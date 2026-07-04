@@ -15,6 +15,6 @@ class Curtain < Formula
   end
 
   test do
-    assert_predicate bin/"curtain", :exist?
+    assert_path_exists bin/"curtain"
   end
 end
