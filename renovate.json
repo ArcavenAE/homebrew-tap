@@ -1,0 +1,5 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["local>ArcavenAE/renovate-config"],
+  "enabledManagers": ["github-actions"]
+}
