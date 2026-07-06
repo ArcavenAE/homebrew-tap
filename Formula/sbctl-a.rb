@@ -11,21 +11,21 @@
 class SbctlA < Formula
   desc "Operator CLI for switchboard (alpha channel, legion clone)"
   homepage "https://github.com/ArcavenAE/switchboard-blue"
-  version "alpha-20260706-033028-f09fe73"
+  version "alpha-20260706-060714-0516f3a"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-033028-f09fe73/sbctl-a-darwin-arm64"
-    sha256 "2c57466d557ee18c4cb649574c3897f54bc2dfc96ea123ba3ed8c8f0020dbe28"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-060714-0516f3a/sbctl-a-darwin-arm64"
+    sha256 "09aa62b8b1a16ddd783f8b31cb62dfc8562a1d3273d3ac37d83fde9ba608d746"
   elsif OS.mac?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-033028-f09fe73/sbctl-a-darwin-amd64"
-    sha256 "893dc4a42b6025069de16a42d7dc9a56a60d3462978ec460692aa296f1cd1cd7"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-060714-0516f3a/sbctl-a-darwin-amd64"
+    sha256 "92012661dd1b07ad275144a9ae7bfd8fc38105b562963ab21aee02ed50d7b1e0"
   elsif OS.linux? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-033028-f09fe73/sbctl-a-linux-arm64"
-    sha256 "490c57d338acc758b80996640aac6073efd623ef73b3fb02d69ba1017303c904"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-060714-0516f3a/sbctl-a-linux-arm64"
+    sha256 "ceb6799b08235932b9e70421da250537ac1b680f9d7b48dcd096842fb5dd0dc7"
   elsif OS.linux?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-033028-f09fe73/sbctl-a-linux-amd64"
-    sha256 "ba38a30b1036902575705a2751ef67c80db88b2ab6d26ebd8476b74c2d9eeb48"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260706-060714-0516f3a/sbctl-a-linux-amd64"
+    sha256 "81bc755e337a6930191fe82b18d679d4385f294dccc8f97e44c42e03636ddc49"
   end
 
   def install
