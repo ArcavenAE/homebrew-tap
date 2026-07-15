@@ -5,7 +5,7 @@
 # macOS only (arm64). Linux support is a future option.
 
 class Bloomctl < Formula
-  desc "Rust CLI for the iru (Kandji) Endpoint Management API — spec-driven, MCP-aware, read-only by default"
+  desc "Spec-driven CLI for the iru (Kandji) Endpoint Management API"
   homepage "https://github.com/ArcavenAE/bloomctl"
   version "alpha-20260715-210400-74df3dc"
   license "MIT"
