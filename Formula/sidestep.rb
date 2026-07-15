@@ -7,12 +7,12 @@
 class Sidestep < Formula
   desc "Rust CLI for the StepSecurity API — codegen from OpenAPI, audit-trail-as-feature"
   homepage "https://github.com/ArcavenAE/sidestep"
-  version "alpha-20260706-015500-15ef970"
+  version "alpha-20260715-222909-6d5e0bb"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/sidestep/releases/download/alpha-20260706-015500-15ef970/sidestep-darwin-arm64"
-    sha256 "fe0d1efe352b8c55b20e2914ad4f8685d539d32caeab7e5e106f0b6a04f42f6a"
+    url "https://github.com/ArcavenAE/sidestep/releases/download/alpha-20260715-222909-6d5e0bb/sidestep-darwin-arm64"
+    sha256 "971709e65964950117f18b77129f998bcefe6efe1d8c7c3c767a4a8d0d0b7834"
   else
     odie "sidestep currently only supports macOS arm64. Build from source for other platforms."
   end
