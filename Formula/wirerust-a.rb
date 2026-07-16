@@ -1,15 +1,15 @@
 class WirerustA < Formula
-  desc "Fast PCAP forensics and network triage CLI tool written in Rust (alpha ch)"
+  desc "Fast PCAP forensics and network triage CLI (alpha)"
   homepage "https://github.com/ArcavenAE/wirerust"
-  version "alpha-20260715.1"
+  version "alpha-20260716.1"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260715.1/wirerust-a-darwin-arm64"
-    sha256 "bc0ac6748dc2801bb6ee457202ddd5197ead6cd99cbc36f7d2bc171a837d769c"
+    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260716.1/wirerust-a-darwin-arm64"
+    sha256 "6bf7c7fa24062a23b7ad0480905185c967f094426ff91260f2ed6c8b296abe49"
   else
-    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260715.1/wirerust-a-darwin-amd64"
-    sha256 "08f2e43491ff4cf2a930980ea83739ec8c2c5625d053ef04b0674561570c9270"
+    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260716.1/wirerust-a-darwin-amd64"
+    sha256 "7ac80060b834bbc59e43e44cc9bbae203f19fbe8f24e0c53218fbd03211fba87"
   end
 
   def install
