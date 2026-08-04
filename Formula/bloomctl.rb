@@ -7,12 +7,12 @@
 class Bloomctl < Formula
   desc "Spec-driven CLI for the iru (Kandji) Endpoint Management API"
   homepage "https://github.com/ArcavenAE/bloomctl"
-  version "alpha-20260717-170056-b4bdc6a"
+  version "alpha-20260804-201929-7eb78cc"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/bloomctl/releases/download/alpha-20260717-170056-b4bdc6a/bloomctl-darwin-arm64"
-    sha256 "cea44efedd96bd6f682da0bb8af2a5ba9323900ce8af24e6f382d2a09840a4bc"
+    url "https://github.com/ArcavenAE/bloomctl/releases/download/alpha-20260804-201929-7eb78cc/bloomctl-darwin-arm64"
+    sha256 "0d66786e481b2dbd9b048256587e7e52bab70ffcae5648704c1554c338b544e4"
   else
     odie "bloomctl currently only supports macOS arm64. Build from source for other platforms."
   end
