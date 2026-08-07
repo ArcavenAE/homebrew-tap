@@ -7,12 +7,12 @@
 class Stave < Formula
   desc "Unofficial CLI for the Wiz API (not affiliated with Wiz, Inc.)"
   homepage "https://github.com/ArcavenAE/stave"
-  version "alpha-20260807-074851-cf69fa2"
+  version "alpha-20260807-080036-06abc1b"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/stave/releases/download/alpha-20260807-074851-cf69fa2/stave-darwin-arm64"
-    sha256 "e82e88c8b4359847d61f979318e3a620fbe067d81cf9b6ed9000e080dd01807f"
+    url "https://github.com/ArcavenAE/stave/releases/download/alpha-20260807-080036-06abc1b/stave-darwin-arm64"
+    sha256 "fb4e8f59261ac87d500cf8fd6443bbe199cc1be540055fea4383a5b8752d5abd"
   else
     odie "stave currently only supports macOS arm64. Build from source for other platforms."
   end
