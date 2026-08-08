@@ -1,18 +1,18 @@
 class Sideshow < Formula
   desc "Content pack manager for AI CLI tools"
   homepage "https://github.com/arcavenae/sideshow"
-  version "0.1.0-alpha.20260801.235058.e658ee6"
+  version "0.1.0-alpha.20260808.194115.24f1f7b"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260801-235058-e658ee6/sideshow-darwin-arm64"
-    sha256 "47639564b3f77c6b40fb03a2c3cb92df8be416a08237e247dc97c40701e65692"
+    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260808-194115-24f1f7b/sideshow-darwin-arm64"
+    sha256 "ecac45441f53af2d0e9e0c25348bfd76ce27d95675fa0e88e0055f6ee6bcceea"
   elsif OS.mac?
-    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260801-235058-e658ee6/sideshow-darwin-amd64"
-    sha256 "3a3be1d01350dfd4c53585a3512d8a85a8ac04ecb1cb31adde204d6006f466fc"
+    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260808-194115-24f1f7b/sideshow-darwin-amd64"
+    sha256 "b16f0b52e5b73f03e9e7ce30a3c4699e805e5a53bb4f4c5711214d6bbb7d712b"
   elsif OS.linux?
-    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260801-235058-e658ee6/sideshow-linux-amd64"
-    sha256 "a306984b8de52b9b7e6b52cbafc92f646651b184f38f55e65a78005241993c97"
+    url "https://github.com/arcavenae/sideshow/releases/download/alpha-20260808-194115-24f1f7b/sideshow-linux-amd64"
+    sha256 "ff42848302d536dc5294dc91d5fa943b64992d8a3eef97a44d3f8a3beaa55230"
   end
 
   def install
