@@ -8,12 +8,12 @@ class SidestepA < Formula
   # no leading article, must not start with the formula name, no trailing period.
   desc "Rust CLI for the StepSecurity API with local audit trail (alpha)"
   homepage "https://github.com/ArcavenAE/sidestep"
-  version "alpha-20260813-092116-be02733"
+  version "alpha-20260813-092718-7970f6c"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/sidestep/releases/download/alpha-20260813-092116-be02733/sidestep-darwin-arm64"
-    sha256 "de5dda86794bf53ad8b4918da4ed776ae4d7b0dd524a333850703fba812a77d0"
+    url "https://github.com/ArcavenAE/sidestep/releases/download/alpha-20260813-092718-7970f6c/sidestep-darwin-arm64"
+    sha256 "a4d41840a1790e5415f6999a3fb8b567d492852631acf3f10e5b646ccc5ad786"
   else
     odie "sidestep currently only supports macOS arm64. Build from source for other platforms."
   end
