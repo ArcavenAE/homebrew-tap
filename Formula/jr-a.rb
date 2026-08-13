@@ -3,15 +3,15 @@ class JrA < Formula
   # no leading article, must not start with the formula name, no trailing period.
   desc "Keyboard-driven Jira CLI with offline support and fuzzy search (alpha)"
   homepage "https://github.com/ArcavenAE/jira-cli"
-  version "alpha-20260813.2"
+  version "alpha-20260813.3"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/jira-cli/releases/download/alpha-20260813.2/jr-a-darwin-arm64"
-    sha256 "4b1b3693f1699eda064c77c279ec356a914b1318565d5c240bcc1dd9dcd2af11"
+    url "https://github.com/ArcavenAE/jira-cli/releases/download/alpha-20260813.3/jr-a-darwin-arm64"
+    sha256 "5d5d26976e977b992d98c84c18fceae3e3e9ba39ecf0cd09b8479cc3dcf0b7c1"
   else
-    url "https://github.com/ArcavenAE/jira-cli/releases/download/alpha-20260813.2/jr-a-darwin-amd64"
-    sha256 "5af793140201f7ec3807b4976522bd00fa2943673e71c22237eda7dc5ce3058b"
+    url "https://github.com/ArcavenAE/jira-cli/releases/download/alpha-20260813.3/jr-a-darwin-amd64"
+    sha256 "25b683a543ca9a0439e4e12e0ac99c836e079d561e754ec183ca1ebf135e3d82"
   end
 
   def install
