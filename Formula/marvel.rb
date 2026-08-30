@@ -1,21 +1,21 @@
 class Marvel < Formula
   desc "Agent orchestration control plane"
   homepage "https://github.com/ArcavenAE/marvel"
-  version "0.1.0-alpha.20260829.190353.98a9a2c"
+  version "0.1.0-alpha.20260830.062721.a9ee600"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260829-190353-98a9a2c/marvel-darwin-arm64"
-    sha256 "f3ea0fe549fa9d247ab85ec5363f66beefe9990111d4a1f8f181118edf0cd6e1"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260830-062721-a9ee600/marvel-darwin-arm64"
+    sha256 "5f174fdbdfdd3c7580086188b0cc04cb900335a054d57bb5392dcb8c02da1fff"
   elsif OS.mac?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260829-190353-98a9a2c/marvel-darwin-amd64"
-    sha256 "19164612c9ccd52611c45bc9761d225f1940e45f4791992ceda74384ec1a91d6"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260830-062721-a9ee600/marvel-darwin-amd64"
+    sha256 "5e22bd6bbcd34ab5b9c34d96a63941faf7fec069419419b3a54da5884bd38a8f"
   elsif OS.linux? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260829-190353-98a9a2c/marvel-linux-arm64"
-    sha256 "f04a170787e21bf350307d2fb90b5c3ebe8fc51286369c4b2d1aea5ac16a3332"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260830-062721-a9ee600/marvel-linux-arm64"
+    sha256 "8a5063c56f00c88906a043a9ffad03a49b640bc90f21e3d0cd816804c4c3fd1e"
   elsif OS.linux?
-    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260829-190353-98a9a2c/marvel-linux-amd64"
-    sha256 "33975a8471ce8d52a425dbdb789485a43215ea0cd1de1823f809af958adcf603"
+    url "https://github.com/ArcavenAE/marvel/releases/download/alpha-20260830-062721-a9ee600/marvel-linux-amd64"
+    sha256 "c217f8798fe97a1c0a0b0fc749a5adc8459a6e170976a91e33d324580369f374"
   end
 
   def install
