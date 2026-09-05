@@ -3,15 +3,15 @@ class WirerustA < Formula
   # no leading article, must not start with the formula name, no trailing period.
   desc "Fast PCAP forensics and network triage CLI (alpha)"
   homepage "https://github.com/ArcavenAE/wirerust"
-  version "alpha-20260905.1"
+  version "alpha-20260905.2"
   license "MIT"
 
   if Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260905.1/wirerust-a-darwin-arm64"
-    sha256 "cfc6f2df931771fb6eb77a0e3ae6cb26dfdce40838a56a3ad7fb14b8fd57579f"
+    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260905.2/wirerust-a-darwin-arm64"
+    sha256 "65b04b3a419a2121eb7b5f647be8e5612c9c04dd2917b9af1c08d83a16a8a5ce"
   else
-    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260905.1/wirerust-a-darwin-amd64"
-    sha256 "21d7bac91da84231ab04eb3ce9e0c4e5f357a77ef48c1b15396ad19998ae2cd8"
+    url "https://github.com/ArcavenAE/wirerust/releases/download/alpha-20260905.2/wirerust-a-darwin-amd64"
+    sha256 "9a75da093459c0eb4cc1083860586d88f5d00d3cbd2183b6d282577ee944ed8d"
   end
 
   def install
