@@ -28,14 +28,24 @@ jobs:
 
       - name: Audit formulas
         run: |
+          failed=""
           for f in Formula/*.rb; do
             name="$(basename "$f" .rb)"
-            brew audit --strict "arcavenae/tap/$name"
+            brew audit --strict "arcavenae/tap/$name" || failed="$failed $name"
           done
+          if [ -n "$failed" ]; then
+            echo "::error::brew audit failed for:$failed"
+            exit 1
+          fi
 
       - name: Check style
         run: |
+          failed=""
           for f in Formula/*.rb; do
             name="$(basename "$f" .rb)"
-            brew style "arcavenae/tap/$name"
+            brew style "arcavenae/tap/$name" || failed="$failed $name"
           done
+          if [ -n "$failed" ]; then
+            echo "::error::brew style failed for:$failed"
+            exit 1
+          fi
