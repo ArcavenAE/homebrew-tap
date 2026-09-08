@@ -3,7 +3,6 @@ class Wirerust < Formula
   # no leading article, must not start with the formula name, no trailing period.
   desc "Fast PCAP forensics and network triage CLI"
   homepage "https://github.com/ArcavenAE/wirerust"
-  version "0.13.2"
   license "MIT"
 
   if Hardware::CPU.arm?
