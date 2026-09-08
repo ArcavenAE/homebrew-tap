@@ -3,7 +3,6 @@ class Jr < Formula
   # no leading article, must not start with the formula name, no trailing period.
   desc "Keyboard-driven Jira CLI with offline support and fuzzy search"
   homepage "https://github.com/ArcavenAE/jira-cli"
-  version "0.6.0"
   license "MIT"
 
   if Hardware::CPU.arm?
