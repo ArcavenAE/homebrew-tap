@@ -7,21 +7,21 @@
 class SwitchboardA < Formula
   desc "Low-latency encrypted tmux session router (alpha channel, legion clone)"
   homepage "https://github.com/ArcavenAE/switchboard-blue"
-  version "alpha-20260922-192024-d2513b0"
+  version "alpha-20260925-004548-e592135"
   license "MIT"
 
   if OS.mac? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260922-192024-d2513b0/switchboard-a-darwin-arm64"
-    sha256 "a32f4267a47537d5c207f9441c3b25c57217a8dc65a72ee0bb76aebfe0564304"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260925-004548-e592135/switchboard-a-darwin-arm64"
+    sha256 "6ac1314b9afdc134a71ee55b4669aa90b2cc161afa48854c5ea8b640f8d00351"
   elsif OS.mac?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260922-192024-d2513b0/switchboard-a-darwin-amd64"
-    sha256 "8facddaccf3e43610425e9c4c2a80f18e4638564a722944d2ba420bb7a2c319a"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260925-004548-e592135/switchboard-a-darwin-amd64"
+    sha256 "0d2691faee74471947afd189d01258774eec1ee154a28de55a8d179db965897f"
   elsif OS.linux? && Hardware::CPU.arm?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260922-192024-d2513b0/switchboard-a-linux-arm64"
-    sha256 "c9732907433237d3ccf497a08f4204401ebcbc9273ea70068a9a11702c27cbbf"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260925-004548-e592135/switchboard-a-linux-arm64"
+    sha256 "07e6f600abaf3cf3cd4320fc398132380d617c893b317ce239c4363013a5475d"
   elsif OS.linux?
-    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260922-192024-d2513b0/switchboard-a-linux-amd64"
-    sha256 "ab198a37b4c81540411036edcf0938d1480a5efb6b590188c2cea62cf8d4ed5a"
+    url "https://github.com/ArcavenAE/switchboard-blue/releases/download/alpha-20260925-004548-e592135/switchboard-a-linux-amd64"
+    sha256 "5b38e357e6f48b45343adebe5a517979930fba563690998052be157c66568a7d"
   end
 
   def install
