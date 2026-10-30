@@ -26,6 +26,11 @@ jobs:
           mkdir -p "$(brew --repository)/Library/Taps/arcavenae"
           ln -sf "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/arcavenae/homebrew-tap"
 
+      - name: Trust this tap
+        run: |
+          brew --version
+          brew trust --tap arcavenae/tap
+
       - name: Audit formulas
         run: |
           failed=""
