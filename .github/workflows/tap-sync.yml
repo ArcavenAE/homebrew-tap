@@ -47,6 +47,25 @@ jobs:
         with:
           persist-credentials: false
 
+      - name: Self-test the rewrite (pull request only)
+        if: github.event_name == 'pull_request'
+        run: |
+          set -euo pipefail
+          # Make marvel look stale (an older alpha tag, zeroed sha256, wrong
+          # version), run the renderer, and require the file to come back
+          # byte for byte. A new marvel release landing mid-run fails this
+          # step; re-run it.
+          cur="$(sed -n 's#.*/releases/download/\([^/]*\)/.*#\1#p' Formula/marvel.rb | head -n 1)"
+          old="$(gh api "repos/ArcavenAE/marvel/releases?per_page=30" --jq '.[].tag_name' | { grep '^alpha-' || true; } | LC_ALL=C sort | head -n 1)"
+          [ -n "$old" ] && [ "$old" != "$cur" ]
+          cp Formula/marvel.rb "$RUNNER_TEMP/marvel.orig"
+          zeros="$(head -c 64 /dev/zero | tr '\0' 0)"
+          sed -i '' -e "s#/download/$cur/#/download/$old/#" -e "s#sha256 \"[0-9a-f]*\"#sha256 \"$zeros\"#" -e 's#^  version ".*"#  version "stale"#' Formula/marvel.rb
+          ! cmp -s Formula/marvel.rb "$RUNNER_TEMP/marvel.orig"
+          scripts/tap-sync.sh "$RUNNER_TEMP/selftest.txt"
+          grep -qx 'Formula/marvel.rb' "$RUNNER_TEMP/selftest.txt"
+          cmp Formula/marvel.rb "$RUNNER_TEMP/marvel.orig"
+
       - name: Render formulas from the newest releases
         run: scripts/tap-sync.sh "$RUNNER_TEMP/changed.txt"
 
