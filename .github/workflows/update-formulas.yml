@@ -1,0 +1,126 @@
+name: Update formulas
+
+# The tap pulls: it reads each listed project's newest release, rewrites the
+# formula in place, audits it, and commits one batch to the default branch
+# through createCommitOnBranch with this job's own GITHUB_TOKEN, which GitHub
+# signs. No key or token is stored for it. The job fails if its commit is not
+# verified. On a pull request a separate read-only job renders, audits and
+# self-tests; it holds no write token and commits nothing.
+# The per-project tap jobs in the source repos keep working until this is proven.
+
+on:
+  schedule:
+    - cron: '7,22,37,52 * * * *'
+  workflow_dispatch:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/update-formulas.yml
+      - scripts/tap-sync.sh
+      - scripts/tap-sync.tsv
+      - scripts/tap-commit.sh
+      - scripts/tap-selftest.sh
+
+permissions:
+  contents: read
+
+concurrency:
+  group: update-formulas-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'main' }}
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Render and audit (pull request, read only)
+    if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+    permissions:
+      contents: read
+    runs-on: macos-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Self-test the renderer
+        run: scripts/tap-selftest.sh
+
+      - name: Render formulas from the newest releases
+        run: scripts/tap-sync.sh "$RUNNER_TEMP/changed.txt"
+
+      - name: Tap local checkout
+        run: |
+          mkdir -p "$(brew --repository)/Library/Taps/arcavenae"
+          ln -sfn "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/arcavenae/homebrew-tap"
+          brew trust --tap arcavenae/tap
+
+      - name: Audit and style the changed formulas
+        run: |
+          set -euo pipefail
+          failed=""
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            name="$(basename "$f" .rb)"
+            brew audit --strict "arcavenae/tap/$name" || failed="$failed $name"
+            brew style "arcavenae/tap/$name" || failed="$failed $name"
+          done < "$RUNNER_TEMP/changed.txt"
+          if [ -n "$failed" ]; then
+            echo "::error::brew audit or style failed for:$failed"
+            exit 1
+          fi
+
+  sync:
+    name: Sync formulas (writes the default branch)
+    if: github.event_name != 'pull_request'
+    permissions:
+      contents: write
+    runs-on: macos-latest
+    timeout-minutes: 20
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GITHUB_REPOSITORY: ${{ github.repository }}
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Render formulas from the newest releases
+        run: scripts/tap-sync.sh "$RUNNER_TEMP/changed.txt"
+
+      - name: Tap local checkout
+        run: |
+          mkdir -p "$(brew --repository)/Library/Taps/arcavenae"
+          ln -sfn "$GITHUB_WORKSPACE" "$(brew --repository)/Library/Taps/arcavenae/homebrew-tap"
+          brew trust --tap arcavenae/tap
+
+      - name: Audit and style the changed formulas
+        run: |
+          set -euo pipefail
+          failed=""
+          while IFS= read -r f; do
+            [ -n "$f" ] || continue
+            name="$(basename "$f" .rb)"
+            brew audit --strict "arcavenae/tap/$name" || failed="$failed $name"
+            brew style "arcavenae/tap/$name" || failed="$failed $name"
+          done < "$RUNNER_TEMP/changed.txt"
+          if [ -n "$failed" ]; then
+            echo "::error::brew audit or style failed for:$failed"
+            exit 1
+          fi
+
+      - name: Commit one batch to the default branch (verified or fail)
+        env:
+          BRANCH: ${{ github.event.repository.default_branch }}
+        run: scripts/tap-commit.sh "$RUNNER_TEMP/changed.txt" "$BRANCH"
