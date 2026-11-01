@@ -1,0 +1,65 @@
+name: Probe signed commit
+
+# One-off probe for the natively signed tap design. A pull_request job commits
+# one tiny file to the scratch branch probe/i78-signed through GraphQL
+# createCommitOnBranch with the job's own GITHUB_TOKEN, then fails unless the
+# API reports that commit as verified. It never touches the default branch.
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - .github/workflows/probe-signed-commit.yml
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    name: createCommitOnBranch is verified
+    if: github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      GH_TOKEN: ${{ github.token }}
+      REPO: ${{ github.repository }}
+      BASE_SHA: ${{ github.event.pull_request.base.sha }}
+      RUN_ID: ${{ github.run_id }}
+      RUN_ATTEMPT: ${{ github.run_attempt }}
+      BRANCH: probe/i78-signed
+    steps:
+      - name: Harden the runner (Audit all outbound calls)
+        uses: step-security/harden-runner@ccd8616d44fd3846e67624a50d5aad6d37bf2d25 # v2.22.1
+        with:
+          egress-policy: audit
+
+      - name: Commit one file to the scratch branch
+        id: commit
+        run: |
+          set -euo pipefail
+          if ! head="$(gh api "repos/$REPO/git/ref/heads/$BRANCH" --jq .object.sha 2>/dev/null)"; then
+            gh api -X POST "repos/$REPO/git/refs" \
+              -f ref="refs/heads/$BRANCH" -f sha="$BASE_SHA" --jq .object.sha >/dev/null
+            head="$BASE_SHA"
+          fi
+          content="$(printf 'run %s attempt %s\n' "$RUN_ID" "$RUN_ATTEMPT" | base64 | tr -d '\n')"
+          jq -n --arg repo "$REPO" --arg branch "$BRANCH" --arg oid "$head" \
+                --arg path "probe/run-$RUN_ID-$RUN_ATTEMPT.txt" --arg content "$content" '
+            { query: "mutation($input: CreateCommitOnBranchInput!) { createCommitOnBranch(input: $input) { commit { oid url } } }",
+              variables: { input: {
+                branch: { repositoryNameWithOwner: $repo, branchName: $branch },
+                expectedHeadOid: $oid,
+                message: { headline: "probe: signed commit through createCommitOnBranch" },
+                fileChanges: { additions: [ { path: $path, contents: $content } ] } } } }' > req.json
+          gh api graphql --input req.json > resp.json
+          cat resp.json
+          sha="$(jq -er '.data.createCommitOnBranch.commit.oid' resp.json)"
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+
+      - name: Read the verification and fail unless verified
+        env:
+          SHA: ${{ steps.commit.outputs.sha }}
+        run: |
+          set -euo pipefail
+          gh api "repos/$REPO/commits/$SHA" --jq '.commit.verification' | tee verification.json
+          jq -e '.verified == true' verification.json
