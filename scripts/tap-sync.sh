@@ -50,6 +50,28 @@ while IFS=$'\t' read -r formula repo re mode; do
     if [[ "$bad" -ne 0 ]]; then fail=1; continue; fi
   fi
 
+  # Integrity before rendering: download each asset the formula names, require
+  # its sha256 to match the release digest, and where the release publishes an
+  # attestation bundle, verify the asset against it.
+  mkdir -p "$tmp/dl"
+  rm -f "$tmp/dl"/*
+  have_att=""
+  if gh api "repos/$repo/releases/tags/$tag" --jq '.assets[].name' | grep -qx 'attestations.sigstore.json'; then
+    gh release download "$tag" -R "$repo" -p attestations.sigstore.json -D "$tmp/dl"
+    have_att=yes
+  fi
+  bad=0
+  for name in $(sed -n 's#.*/releases/download/[^/]*/\([^"]*\)".*#\1#p' "$f"); do
+    gh release download "$tag" -R "$repo" -p "$name" -D "$tmp/dl" --clobber
+    got="$(shasum -a 256 "$tmp/dl/$name" | cut -d' ' -f1)"
+    want="$(awk -F'\t' -v n="$name" '$1 == n { print $2 }' "$tmp/digests.tsv")"
+    if [[ "$got" != "$want" ]]; then echo "::error::$formula: $name sha256 $got differs from the release digest $want"; bad=1; continue; fi
+    if [[ -n "$have_att" ]] && ! gh attestation verify "$tmp/dl/$name" -R "$repo" --bundle "$tmp/dl/attestations.sigstore.json" > /dev/null; then
+      echo "::error::$formula: attestation verify failed for $name"; bad=1
+    fi
+  done
+  if [[ "$bad" -ne 0 ]]; then fail=1; continue; fi
+
   if ! awk -v old="$cur" -v new="$tag" -v ver="$ver" -v dig="$tmp/digests.tsv" '
     BEGIN { while ((getline l < dig) > 0) { split(l, a, "\t"); d[a[1]] = a[2] } }
     ver != "" && /^[[:space:]]*version "/ { sub(/version "[^"]*"/, "version \"" ver "\"") }

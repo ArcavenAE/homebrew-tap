@@ -1,4 +1,4 @@
-name: Tap sync
+name: Update formulas
 
 # The tap pulls: it reads each listed project's newest release, rewrites the
 # formula in place, audits it, and commits one batch to the default branch
@@ -14,7 +14,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - .github/workflows/tap-sync.yml
+      - .github/workflows/update-formulas.yml
       - scripts/tap-sync.sh
       - scripts/tap-sync.tsv
       - scripts/tap-commit.sh
@@ -23,7 +23,7 @@ permissions:
   contents: read
 
 concurrency:
-  group: tap-sync
+  group: update-formulas
   cancel-in-progress: false
 
 jobs:
