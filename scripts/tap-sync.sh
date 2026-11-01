@@ -5,6 +5,12 @@
 # list file. It never commits; scripts/tap-commit.sh does that.
 set -euo pipefail
 export LC_ALL=C
+
+# A tag or asset name ends up inside Ruby strings in the formula, and a git ref
+# may hold a double quote or #{...}. Accept only a plain charset, and fail closed.
+safe_name() { [[ ${#1} -ge 1 && ${#1} -le 128 && "$1" =~ ^[A-Za-z0-9._-]+$ ]]; }
+if [[ "${1:-}" == "--name-ok" ]]; then safe_name "${2-}"; exit; fi
+
 cd "$(dirname "$0")/.."
 
 list="${1:-changed.txt}"
@@ -24,8 +30,11 @@ while IFS=$'\t' read -r formula repo re mode; do
     | { grep -E "$re" || true; } | sort | tail -n 1)"
   if [[ -z "$tag" ]]; then echo "::error::$formula: no release of $repo matches $re"; fail=1; continue; fi
 
+  if ! safe_name "$tag"; then echo "::error::$formula: newest matching tag of $repo has characters outside A-Za-z0-9._-; refusing it"; fail=1; continue; fi
+
   cur="$(sed -n 's#.*/releases/download/\([^/]*\)/.*#\1#p' "$f" | head -n 1)"
   if [[ -z "$cur" ]]; then echo "::error::$f has no release url to rewrite"; fail=1; continue; fi
+  if ! safe_name "$cur"; then echo "::error::$f carries a release tag with characters outside A-Za-z0-9._-"; fail=1; continue; fi
   if [[ "$tag" == "$cur" ]]; then echo "$formula: current at $cur"; continue; fi
   if [[ "$tag" < "$cur" ]]; then echo "::notice::$formula: formula tag $cur is newer than the newest matching release $tag; left alone"; continue; fi
 
@@ -40,7 +49,8 @@ while IFS=$'\t' read -r formula repo re mode; do
   # checksums.txt, every shared name must agree with it.
   gh api "repos/$repo/releases/tags/$tag" \
     --jq '.assets[] | select(.digest != null) | "\(.name)\t\(.digest | sub("^sha256:"; ""))"' > "$tmp/digests.tsv"
-  if gh api "repos/$repo/releases/tags/$tag" --jq '.assets[].name' | grep -qx 'checksums.txt'; then
+  names="$(gh api "repos/$repo/releases/tags/$tag" --jq '.assets[].name')"
+  if grep -qx 'checksums.txt' <<< "$names"; then
     gh release download "$tag" -R "$repo" -p checksums.txt -O "$tmp/checksums.txt"
     bad=0
     while read -r sum name; do
@@ -56,12 +66,13 @@ while IFS=$'\t' read -r formula repo re mode; do
   mkdir -p "$tmp/dl"
   rm -f "$tmp/dl"/*
   have_att=""
-  if gh api "repos/$repo/releases/tags/$tag" --jq '.assets[].name' | grep -qx 'attestations.sigstore.json'; then
+  if grep -qx 'attestations.sigstore.json' <<< "$names"; then
     gh release download "$tag" -R "$repo" -p attestations.sigstore.json -D "$tmp/dl"
     have_att=yes
   fi
   bad=0
   for name in $(sed -n 's#.*/releases/download/[^/]*/\([^"]*\)".*#\1#p' "$f"); do
+    if ! safe_name "$name"; then echo "::error::$formula: asset name in $f is outside A-Za-z0-9._-"; bad=1; continue; fi
     gh release download "$tag" -R "$repo" -p "$name" -D "$tmp/dl" --clobber
     got="$(shasum -a 256 "$tmp/dl/$name" | cut -d' ' -f1)"
     want="$(awk -F'\t' -v n="$name" '$1 == n { print $2 }' "$tmp/digests.tsv")"
