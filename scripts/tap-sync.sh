@@ -19,16 +19,37 @@ tmp="$(mktemp -d)"
 trap 'rm -rf "$tmp"' EXIT
 fail=0
 
-while IFS=$'\t' read -r formula repo re mode; do
+# Version order for a row that sets the semver flag. Every run of digits in a tag
+# is zero-padded to ten places, so a plain string compare of two keys orders
+# v0.1.10 above v0.1.9 and rc.10 above rc.9. Rows without the flag keep the
+# plain string order they always had.
+vkey() { printf '%s\n' "$1" | awk '{ out = ""; s = $0
+  while (match(s, /[0-9]+/)) { out = out substr(s, 1, RSTART - 1) sprintf("%010d", substr(s, RSTART, RLENGTH) + 0); s = substr(s, RSTART + RLENGTH) }
+  print out s }'; }
+vsort_tags() { while IFS= read -r t; do if [[ -n "$t" ]]; then printf '%s\t%s\n' "$(vkey "$t")" "$t"; fi; done | sort | cut -f2-; }
+
+while IFS=$'\t' read -r formula repo re mode flags; do
   case "$formula" in ''|'#'*) continue ;; esac
   f="Formula/$formula.rb"
   if [[ ! -f "$f" ]]; then echo "::error::$f is listed but missing"; fail=1; continue; fi
 
   # The tag embeds the build time, and a release's created_at can be out of
   # order with it (two marvel alphas minutes apart), so pick the newest tag by name.
-  tag="$(gh api "repos/$repo/releases?per_page=30" --jq '.[] | select(.draft == false) | .tag_name' \
-    | { grep -E "$re" || true; } | sort | tail -n 1)"
-  if [[ -z "$tag" ]]; then echo "::error::$formula: no release of $repo matches $re"; fail=1; continue; fi
+  # A row with the semver flag reads every page of releases (the releases
+  # endpoint has no tag filter, and a channel's last release can be older than
+  # thirty newer ones) and orders by version. Other rows read the newest thirty
+  # and order by name, as before.
+  if [[ ",${flags:-}," == *,semver,* ]]; then
+    tag="$(gh api --paginate "repos/$repo/releases?per_page=100" --jq '.[] | select(.draft == false) | .tag_name' \
+      | { grep -E "$re" || true; } | vsort_tags | tail -n 1)"
+  else
+    tag="$(gh api "repos/$repo/releases?per_page=30" --jq '.[] | select(.draft == false) | .tag_name' \
+      | { grep -E "$re" || true; } | sort | tail -n 1)"
+  fi
+  if [[ -z "$tag" ]]; then
+    if [[ ",${flags:-}," == *,optional,* ]]; then echo "::notice::$formula: no release of $repo matches $re yet; left alone"; continue; fi
+    echo "::error::$formula: no release of $repo matches $re"; fail=1; continue
+  fi
 
   if ! safe_name "$tag"; then echo "::error::$formula: newest matching tag of $repo has characters outside A-Za-z0-9._-; refusing it"; fail=1; continue; fi
 
@@ -36,10 +57,13 @@ while IFS=$'\t' read -r formula repo re mode; do
   if [[ -z "$cur" ]]; then echo "::error::$f has no release url to rewrite"; fail=1; continue; fi
   if ! safe_name "$cur"; then echo "::error::$f carries a release tag with characters outside A-Za-z0-9._-"; fail=1; continue; fi
   if [[ "$tag" == "$cur" ]]; then echo "$formula: current at $cur"; continue; fi
-  if [[ "$tag" < "$cur" ]]; then echo "::notice::$formula: formula tag $cur is newer than the newest matching release $tag; left alone"; continue; fi
+  if [[ ",${flags:-}," == *,semver,* ]]; then older=0; [[ "$(vkey "$tag")" < "$(vkey "$cur")" ]] && older=1
+  else older=0; [[ "$tag" < "$cur" ]] && older=1; fi
+  if [[ "$older" -eq 1 ]]; then echo "::notice::$formula: formula tag $cur is newer than the newest matching release $tag; left alone"; continue; fi
 
   case "$mode" in
     tag) ver="$tag" ;;
+    strip-v) ver="${tag#v}" ;;
     dotted) ver="0.1.0-$(printf '%s' "$tag" | tr '-' '.')" ;;
     keep) ver="" ;;
     *) echo "::error::$formula: unknown version mode $mode"; fail=1; continue ;;

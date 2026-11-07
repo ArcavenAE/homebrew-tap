@@ -1,9 +1,11 @@
-# formula	repo	tag regex (ERE, matched against release tags)	version mode (tag | dotted | keep)
-# tag: version is the tag. dotted: version is "0.1.0-" plus the tag with "-" written as ".".
+# formula	repo	tag regex (ERE, matched against release tags)	version mode (tag | strip-v | dotted | keep)	flags (optional, comma separated)
+# tag: version is the tag. strip-v: version is the tag without its leading "v". dotted: version is "0.1.0-" plus the tag with "-" written as ".".
+# flags: semver reads every page of releases and orders tags by version, not by name.
+# optional makes "no release matches yet" a notice instead of a failure. A row without the flag fails loudly.
 # Rows are the public projects whose formula shape this script can rewrite in place.
 # Not listed, so still updated only by their own release jobs: beadle, flyloft,
-# jr, jr-a, jr-d, sbctl-a, sidestep, sidestep-rc, switchboard, switchboard-a,
-# threedoors, wirerust, wirerust-a, and the stable channels. Two private projects are out of reach of this job's token and stay on their own path.
+# jr, jr-a, jr-d, sbctl-a, switchboard, switchboard-a,
+# threedoors, wirerust, wirerust-a, and the stable channels other than sidestep's. Two private projects are out of reach of this job's token and stay on their own path.
 marvel	ArcavenAE/marvel	^alpha-	dotted
 bloomctl	ArcavenAE/bloomctl	^alpha-	tag
 stave	ArcavenAE/stave	^alpha-	tag
@@ -12,3 +14,5 @@ sideshow	ArcavenAE/sideshow	^alpha-	dotted
 forestage-a	ArcavenAE/forestage	^alpha-	tag
 sidestep-a	ArcavenAE/sidestep	^alpha-	tag
 threedoors-a	ArcavenAE/ThreeDoors	^alpha-[0-9]{8}-[0-9]{6}-	dotted
+sidestep-rc	ArcavenAE/sidestep	^v[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$	strip-v	optional,semver
+sidestep	ArcavenAE/sidestep	^v[0-9]+\.[0-9]+\.[0-9]+$	strip-v	optional,semver
