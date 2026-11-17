@@ -4,7 +4,7 @@
 # optional makes "no release matches yet" a notice instead of a failure. A row without the flag fails loudly.
 # Rows are the public projects whose formula shape this script can rewrite in place.
 # Not listed, so still updated only by their own release jobs: beadle, flyloft,
-# jr, jr-a, jr-d, sbctl-a, switchboard, switchboard-a,
+# switchboard,
 # threedoors, wirerust, wirerust-a, and the stable channels other than sidestep's. Two private projects are out of reach of this job's token and stay on their own path.
 marvel	ArcavenAE/marvel	^alpha-	dotted
 bloomctl	ArcavenAE/bloomctl	^alpha-	tag
@@ -16,3 +16,8 @@ sidestep-a	ArcavenAE/sidestep	^alpha-	tag
 threedoors-a	ArcavenAE/ThreeDoors	^alpha-[0-9]{8}-[0-9]{6}-	dotted
 sidestep-rc	ArcavenAE/sidestep	^v[0-9]+\.[0-9]+\.[0-9]+-rc\.[0-9]+$	strip-v	optional,semver
 sidestep	ArcavenAE/sidestep	^v[0-9]+\.[0-9]+\.[0-9]+$	strip-v	optional,semver
+jr-a	ArcavenAE/jira-cli	^alpha-[0-9]{8}\.[0-9]+$	tag	semver
+jr-d	ArcavenAE/jira-cli	^v[0-9]+\.[0-9]+\.[0-9]+-dev\.[0-9]+$	strip-v	semver
+jr	ArcavenAE/jira-cli	^v[0-9]+\.[0-9]+\.[0-9]+$	keep	semver
+switchboard-a	ArcavenAE/switchboard-blue	^alpha-[0-9]{8}-[0-9]{6}-	tag
+sbctl-a	ArcavenAE/switchboard-blue	^alpha-[0-9]{8}-[0-9]{6}-	tag
