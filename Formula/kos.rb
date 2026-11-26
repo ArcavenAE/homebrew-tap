@@ -5,9 +5,9 @@
 class Kos < Formula
   desc "Graph-based knowledge accumulation for designed systems"
   homepage "https://github.com/arcavenae/kos"
-  url "https://github.com/arcavenae/kos/releases/download/alpha-20261125-011758-69d7b01/kos-darwin-arm64"
-  version "alpha-20261125-011758-69d7b01"
-  sha256 "4c4007bb80295761f6eefa05985dbb3269a4052a0414e7ea570e4f0647b5e806"
+  url "https://github.com/arcavenae/kos/releases/download/alpha-20261126-004256-79f551c/kos-darwin-arm64"
+  version "alpha-20261126-004256-79f551c"
+  sha256 "48dccdfe2ca5bf04cd49d9d3cde57a9ba8406f4fdb4eedf156ef883a375774f2"
   license "MIT"
 
   def install
